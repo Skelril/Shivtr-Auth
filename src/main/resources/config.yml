@@ -1,0 +1,4 @@
+website-url: http://example.shivtr.com/
+update-frequency: 30
+forced-login-during-offline-mode: true
+

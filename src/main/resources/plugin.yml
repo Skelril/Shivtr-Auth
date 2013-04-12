@@ -1,0 +1,15 @@
+name: Shivtr Auth
+main: us.arrowcraft.ShivtrAuth.ShivtrAuth
+version: ${project.version}
+author: Dark_Arc
+commands:
+   authupdate:
+      description: Update the Shivtr Auth white list.
+      usage: /<command>
+      permission: <plugin name>.commands.update
+      permission-message: You don't have <permission>.
+   login:
+      description: Authenticate with your Shivtr based site.
+      usage: /<command>
+      permission: <plugin name>.commands.login
+      permission-message: You don't have <permission>.
