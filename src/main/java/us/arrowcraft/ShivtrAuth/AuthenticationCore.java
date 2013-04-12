@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.ALLOWED;
 import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST;
 
 /**
@@ -64,7 +65,7 @@ public class AuthenticationCore implements Listener, Runnable {
     public void playerLogin(AsyncPlayerPreLoginEvent event) {
 
         try {
-            if (!canJoin(event.getName())) {
+            if (!canJoin(event.getName()) && event.getLoginResult().equals(ALLOWED)) {
                 event.disallow(KICK_WHITELIST, "You must register on your account on " + websiteURL + ".");
             }
         } catch (Exception e) {
