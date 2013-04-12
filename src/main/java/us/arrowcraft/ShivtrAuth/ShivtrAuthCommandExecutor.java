@@ -41,29 +41,6 @@ public class ShivtrAuthCommandExecutor implements CommandExecutor {
             } else {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
             }
-        } else if (cmd.getName().equalsIgnoreCase("login")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "You must be a player to use this command.");
-            } else if (args.length != 2) {
-                if (args.length < 2) {
-                    sender.sendMessage(ChatColor.RED + "Too few arguments!");
-                } else {
-                    sender.sendMessage(ChatColor.RED + "Too many arguments!");
-                }
-            } else if (sender.hasPermission("shivtrauth.commands.login")) {
-                String token = plugin.getAuthenticationCore().authenticate(args[0], args[1]);
-                if (!token.equals("")) {
-                    if (offlineMode != null && offlineMode.isLocked(sender.getName())) {
-                        offlineMode.unlockPlayer(sender.getName());
-                    }
-
-                    authenticationCore.getCharacter(sender.getName()).setAuthToken(token);
-                } else {
-                    sender.sendMessage(ChatColor.RED + "Invalid email/password combination try again.");
-                }
-            } else {
-                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
-            }
         }
         return false;
     }
