@@ -1,9 +1,8 @@
 package us.arrowcraft.ShivtrAuth;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
+
+import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST;
 
 /**
  * Author: Turtle9598
@@ -37,7 +38,7 @@ public class AuthenticationCore implements Listener, Runnable {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
 
         JSONArray[] objects = getResultArrayFrom("characters.json");
 
@@ -60,40 +61,28 @@ public class AuthenticationCore implements Listener, Runnable {
     }
 
     @EventHandler
-    public void playerLogin(PlayerLoginEvent event) {
+    public void playerLogin(AsyncPlayerPreLoginEvent event) {
 
         try {
-            if (!canJoin(event.getPlayer())) {
-                event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You must register on " +
-                        "your account on " + websiteURL + ".");
+            if (!canJoin(event.getName())) {
+                event.disallow(KICK_WHITELIST, "You must register on your account on " + websiteURL + ".");
             }
         } catch (Exception e) {
-            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "An error has occurred " +
-                    "please try again in a few minutes.");
+            event.disallow(KICK_WHITELIST, "An error has occurred please try again in a few minutes.");
         }
     }
 
-    public Character getCharacter(Player player) {
-
-        return getCharacter(player.getName());
-    }
-
-    public Character getCharacter(String playerName) {
+    public synchronized Character getCharacter(String playerName) {
 
         return characters.get(playerName.trim().toLowerCase());
     }
 
-    public boolean canJoin(Player player) {
-
-        return canJoin(player.getName());
-    }
-
-    public boolean canJoin(String playerName) {
+    public synchronized boolean canJoin(String playerName) {
 
         return characters.keySet().contains(playerName.trim().toLowerCase());
     }
 
-    public JSONArray[] getResultArrayFrom(String subAddress) {
+    public synchronized JSONArray[] getResultArrayFrom(String subAddress) {
 
         JSONArray objective[] = null;
         HttpURLConnection connection = null;
@@ -156,7 +145,7 @@ public class AuthenticationCore implements Listener, Runnable {
         }
     };
 
-    public void updateWhiteList(JSONArray[] object) {
+    public synchronized void updateWhiteList(JSONArray[] object) {
 
         // Load the storage directory
         File charactersDirectory = new File(plugin.getDataFolder().getPath() + "/characters");
@@ -198,7 +187,7 @@ public class AuthenticationCore implements Listener, Runnable {
         log.info("The white list has updated successfully.");
     }
 
-    private void loadBackupWhiteList() {
+    private synchronized void loadBackupWhiteList() {
 
         File charactersDirectory = new File(plugin.getDataFolder().getPath() + "/characters");
         if (!charactersDirectory.exists()) {
@@ -237,7 +226,7 @@ public class AuthenticationCore implements Listener, Runnable {
         log.info("All found offline files have been loaded.");
     }
 
-    public void addCharacters(JSONArray aJSONArray) {
+    public synchronized void addCharacters(JSONArray aJSONArray) {
 
         // Remove Old Characters
         characters.clear();

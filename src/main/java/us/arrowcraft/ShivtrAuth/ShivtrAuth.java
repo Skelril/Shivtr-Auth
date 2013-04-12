@@ -44,7 +44,7 @@ public class ShivtrAuth extends JavaPlugin {
         }
 
         // Start the AuthenticationCore
-        getServer().getScheduler().runTaskTimer(this, authenticationCore, 0, 20 * 60 * updateFrequency);
+        getServer().getScheduler().runTaskTimerAsynchronously(this, authenticationCore, 0, 20 * 60 * updateFrequency);
 
         // Start the command executor
         executor = new ShivtrAuthCommandExecutor(this);
