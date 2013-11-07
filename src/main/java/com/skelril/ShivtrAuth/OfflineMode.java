@@ -45,7 +45,7 @@ public class OfflineMode implements Listener {
 
         Player player = event.getPlayer();
 
-        authenticationCore.getCharacter(player).setAuthToken("");
+        authenticationCore.getCharacter(player.getName()).setAuthToken("");
     }
 
     private void messagePlayer(Player player) {

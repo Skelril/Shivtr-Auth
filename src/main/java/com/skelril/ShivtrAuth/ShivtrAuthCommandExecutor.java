@@ -33,7 +33,7 @@ public class ShivtrAuthCommandExecutor implements CommandExecutor {
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.RED + "Too many arguments!");
             } else if (sender.hasPermission("shivtrauth.commands.update")) {
-                authenticationCore.updateWhiteList(authenticationCore.getResultArrayFrom("characters.json"));
+                authenticationCore.updateWhiteList(authenticationCore.getFrom("characters.json"));
                 if (sender instanceof Player) {
                     sender.sendMessage(ChatColor.YELLOW + "The Characters List(s) is now being updated.");
                 }

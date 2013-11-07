@@ -49,7 +49,6 @@ public class ShivtrAuth extends JavaPlugin {
         // Start the command executor
         executor = new ShivtrAuthCommandExecutor(this);
         getCommand("authupdate").setExecutor(executor);
-        getCommand("login").setExecutor(executor);
     }
 
     @Override
