@@ -1,5 +1,5 @@
 name: Shivtr Auth
-main: us.arrowcraft.ShivtrAuth.ShivtrAuth
+main: com.skelril.ShivtrAuth.ShivtrAuth
 version: ${project.version}
 author: Dark_Arc
 commands:

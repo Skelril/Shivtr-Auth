@@ -1,4 +1,4 @@
-package us.arrowcraft.ShivtrAuth.DataTypes;
+package com.skelril.ShivtrAuth.DataTypes;
 
 /**
  * Author: Turtle9598

@@ -1,4 +1,4 @@
-package us.arrowcraft.ShivtrAuth;
+package com.skelril.ShivtrAuth;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,7 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import us.arrowcraft.ShivtrAuth.DataTypes.Character;
+import com.skelril.ShivtrAuth.DataTypes.Character;
 
 import java.io.*;
 import java.net.HttpURLConnection;

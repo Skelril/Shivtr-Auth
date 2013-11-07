@@ -1,4 +1,4 @@
-package us.arrowcraft.ShivtrAuth;
+package com.skelril.ShivtrAuth;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
