@@ -90,13 +90,11 @@ public class AuthenticationCore implements Listener, Runnable {
 
     public synchronized JSONArray getFrom(String subAddress) {
 
-        JSONArray objective = null;
+        JSONArray objective = new JSONArray();
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-
-            List<JSONObject> objects = new ArrayList<JSONObject>();
             JSONParser parser = new JSONParser();
             for (int i = 1; true; i++) {
 
@@ -122,25 +120,22 @@ public class AuthenticationCore implements Listener, Runnable {
                     JSONObject o = (JSONObject) parser.parse(builder.toString());
                     JSONArray ao = (JSONArray) o.get("characters");
                     if (ao.isEmpty()) break;
-                    Collections.addAll(objects, (JSONObject[]) ao.toArray(new JSONObject[ao.size()]));
-
+                    Collections.addAll(objective, (JSONObject[]) ao.toArray(new JSONObject[ao.size()]));
                 } catch (ParseException e) {
                     break;
+                } finally {
+                    if (connection != null) connection.disconnect();
+
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException ignored) {
+                        }
+                    }
                 }
             }
-            objective = new JSONArray();
-            objective.addAll(objects);
         } catch (IOException e) {
             return null;
-        } finally {
-            if (connection != null) connection.disconnect();
-
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException ignored) {
-                }
-            }
         }
 
         return objective;
